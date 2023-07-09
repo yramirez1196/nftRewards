@@ -14,20 +14,23 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^6.4.0",
+    "@popperjs/core": "^2.11.8",
+    "@tailwindcss/forms": "^0.5.3",
     "@types/node": "20.4.0",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
-    "autoprefixer": "10.4.14",
+    "chart.js": "^4.3.0",
     "eslint-config-next": "13.4.8",
     "next": "13.4.8",
-    "postcss": "8.4.25",
     "react": "18.2.0",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.2",
     "typescript": "*"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.50.0",
+    "autoprefixer": "^10.4.14",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.8.0",
     "eslint-config-standard-with-typescript": "^36.0.0",
@@ -35,7 +38,9 @@
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
     "eslint-plugin-react": "^7.32.2",
+    "husky": "^8.0.0",
+    "postcss": "^8.4.25",
     "prettier": "^3.0.0",
-    "husky": "^8.0.0"
+    "tailwindcss": "^3.3.2"
   }
 }
