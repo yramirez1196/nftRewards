@@ -2,8 +2,9 @@ import React from "react";
 
 // components
 
-import MapExample from "components/Maps/MapExample.js";
+
 import { AdminLayout } from "@/layouts/Admin";
+import { MapExample } from "@/components/Maps/MapExample";
 
 // layout for page
 
