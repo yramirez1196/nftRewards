@@ -53,9 +53,9 @@ const Login = () => {
   };
 
   React.useEffect(() => {
-    
     if (isConnected && !session && chain?.id === 11155111) {
-       handleLogin(); 
+			console.log("rjkkerwe")
+      handleLogin();
     } else {
       /* disconnect(); */
     }
@@ -79,7 +79,7 @@ const Login = () => {
                   </h6>
                 </div>
                 <div className="text-center flex flex-col gap-y-4 items-center pt-10">
-                  {connectors?.map((connector) => {
+                  {!isConnected && connectors?.map((connector) => {
                     return (
                       <button
                         key={connector.id}
@@ -90,22 +90,17 @@ const Login = () => {
                           if (connector.ready) {
                             connect({ connector });
                           }
-
-                          
                         }}
                       >
                         {connector.name}
                         {isLoading &&
                           connector.id === pendingConnector?.id &&
                           " (connecting)"}
-													
                       </button>
                     );
                   })}
-
-
                 </div>
-								<NetworkSwitcher></NetworkSwitcher>
+                {isConnected && <NetworkSwitcher></NetworkSwitcher>}
               </div>
             </div>
             <div className="flex flex-wrap mt-6 relative">
