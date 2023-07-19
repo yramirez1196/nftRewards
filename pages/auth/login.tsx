@@ -45,7 +45,7 @@ const Login = () => {
         signature,
         callbackUrl,
       });
-
+			console.log("redirect")
       router.push("/admin/dashboard");
     } catch (error) {
       window.alert(error);
@@ -53,6 +53,7 @@ const Login = () => {
   };
 
   React.useEffect(() => {
+		console.log(isConnected);
     if (isConnected && !session && chain?.id === 11155111) {
 			console.log("rjkkerwe")
       handleLogin();
@@ -89,6 +90,7 @@ const Login = () => {
                           e.preventDefault();
                           if (connector.ready) {
                             connect({ connector });
+														
                           }
                         }}
                       >
