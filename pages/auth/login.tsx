@@ -53,7 +53,7 @@ const Login = () => {
   };
 
   React.useEffect(() => {
-    console.log(isConnected);
+    
     if (isConnected && !session && chain?.id === 11155111) {
        handleLogin(); 
     } else {

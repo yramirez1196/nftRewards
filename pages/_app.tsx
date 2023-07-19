@@ -7,7 +7,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "styles/tailwind.css";
 import "styles/globals.css";
 import { WagmiConfig, createConfig, configureChains } from "wagmi";
-import { goerli } from "wagmi/chains";
+import { goerli, sepolia } from "wagmi/chains";
 import { publicProvider } from "wagmi/providers/public";
 
 import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
@@ -20,7 +20,7 @@ export default function App({ Component, pageProps }: any) {
   const Layout = Component.layout || (({ children }: any) => <>{children}</>);
 
   const { chains, publicClient, webSocketPublicClient } = configureChains(
-    [goerli],
+    [goerli, sepolia],
     [publicProvider()]
   );
   // Set up wagmi config
