@@ -52,10 +52,10 @@ const Login = () => {
       window.alert(error);
     }
   };
-  const [Band, setBand] = React.useState(false);
+  const [band, setBand] = React.useState(false);
   React.useEffect(() => {
-    console.log(isConnected);
-    if (!Band && isConnected && !session && chain?.id === 11155111) {
+    console.log(band,isConnected, session, chain?.id);
+    if (!band && isConnected && !session && chain?.id === 11155111) {
       handleLogin();
     } else {
       /* disconnect(); */
