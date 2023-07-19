@@ -2,47 +2,72 @@ import React from "react";
 
 import Head from "next/head";
 
-
-
-
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import "styles/tailwind.css";
 
-/* Router.events.on("routeChangeStart", (url) => {
-  console.log(`Loading: ${url}`);
-  document.body.classList.add("body-page-transition");
-  ReactDOM.render(
-    <PageChange path={url} />,
-    document.getElementById("page-transition")
-  );
-});
-Router.events.on("routeChangeComplete", () => {
-  ReactDOM.unmountComponentAtNode(document.getElementById("page-transition"));
-  document.body.classList.remove("body-page-transition");
-});
-Router.events.on("routeChangeError", () => {
-  ReactDOM.unmountComponentAtNode(document.getElementById("page-transition"));
-  document.body.classList.remove("body-page-transition");
-}); */
+import "styles/tailwind.css";
+import "styles/globals.css";
+import { WagmiConfig, createConfig, configureChains } from "wagmi";
+import { goerli } from "wagmi/chains";
+import { publicProvider } from "wagmi/providers/public";
+
+import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
+import { InjectedConnector } from "wagmi/connectors/injected";
+import { MetaMaskConnector } from "wagmi/connectors/metaMask";
+import { SessionProvider } from "next-auth/react";
+/* import { WalletConnectConnector } from "wagmi/connectors/walletConnect"; */
 
 export default function App({ Component, pageProps }: any) {
+  const Layout = Component.layout || (({ children }: any) => <>{children}</>);
 
-	
-  const Layout = Component.layout || (({ children }:any) => <>{children}</>);
-
+  const { chains, publicClient, webSocketPublicClient } = configureChains(
+    [goerli],
+    [publicProvider()]
+  );
+  // Set up wagmi config
+  const config = createConfig({
+    autoConnect: true,
+    connectors: [
+      new MetaMaskConnector({ chains }),
+      new CoinbaseWalletConnector({
+        chains,
+        options: {
+          appName: "wagmi",
+        },
+      }),
+      /* new WalletConnectConnector({
+        chains,
+        options: {
+          projectId: "...",
+        },
+      }),*/
+      new InjectedConnector({
+        chains,
+        options: {
+          name: "Injected",
+          shimDisconnect: true,
+        },
+      }),
+    ],
+    publicClient,
+    webSocketPublicClient,
+  });
   return (
     <React.Fragment>
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-        <title>Notus NextJS by Creative Tim</title>
-        <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
-      </Head>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <WagmiConfig config={config}>
+        <SessionProvider session={pageProps?.session}>
+          <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1, shrink-to-fit=no"
+            />
+            <title>Notus NextJS by Creative Tim</title>
+            <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+          </Head>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </SessionProvider>
+      </WagmiConfig>
     </React.Fragment>
   );
 }
