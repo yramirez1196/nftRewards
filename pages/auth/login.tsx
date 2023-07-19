@@ -45,7 +45,7 @@ const Login = () => {
         signature,
         callbackUrl,
       });
-      setBand(true);
+
       console.log("redirect", session);
       router.push("/admin/dashboard");
     } catch (error) {
@@ -54,16 +54,18 @@ const Login = () => {
   };
   const [band, setBand] = React.useState(false);
   React.useEffect(() => {
-    console.log(band,isConnected, session, chain?.id);
+    console.log(band, isConnected, session, chain?.id);
     if (!band && isConnected && !session && chain?.id === 11155111) {
+      setBand(true);
+			
       handleLogin();
     } else {
       /* disconnect(); */
     }
   }, [isConnected]);
-  React.useEffect(() => {
+  /* React.useEffect(() => {
     console.log(chain);
-  }, [chain]);
+  }, [chain]); */
 
   /* const { data: ensName } = useEnsName({ address }); */
 
