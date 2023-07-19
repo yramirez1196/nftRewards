@@ -45,17 +45,17 @@ const Login = () => {
         signature,
         callbackUrl,
       });
-			console.log("redirect")
+      setBand(true);
+      console.log("redirect", session);
       router.push("/admin/dashboard");
     } catch (error) {
       window.alert(error);
     }
   };
-
+  const [Band, setBand] = React.useState(false);
   React.useEffect(() => {
-		console.log(isConnected);
-    if (isConnected && !session && chain?.id === 11155111) {
-			console.log("rjkkerwe")
+    console.log(isConnected);
+    if (!Band && isConnected && !session && chain?.id === 11155111) {
       handleLogin();
     } else {
       /* disconnect(); */
@@ -80,27 +80,27 @@ const Login = () => {
                   </h6>
                 </div>
                 <div className="text-center flex flex-col gap-y-4 items-center pt-10">
-                  {!isConnected && connectors?.map((connector) => {
-                    return (
-                      <button
-                        key={connector.id}
-                        className="bg-white active:bg-blueGray-50 text-blueGray-700  px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150 w-[200px]"
-                        type="button"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (connector.ready) {
-                            connect({ connector });
-														
-                          }
-                        }}
-                      >
-                        {connector.name}
-                        {isLoading &&
-                          connector.id === pendingConnector?.id &&
-                          " (connecting)"}
-                      </button>
-                    );
-                  })}
+                  {!isConnected &&
+                    connectors?.map((connector) => {
+                      return (
+                        <button
+                          key={connector.id}
+                          className="bg-white active:bg-blueGray-50 text-blueGray-700  px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150 w-[200px]"
+                          type="button"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            if (connector.ready) {
+                              connect({ connector });
+                            }
+                          }}
+                        >
+                          {connector.name}
+                          {isLoading &&
+                            connector.id === pendingConnector?.id &&
+                            " (connecting)"}
+                        </button>
+                      );
+                    })}
                 </div>
                 {isConnected && <NetworkSwitcher></NetworkSwitcher>}
               </div>
