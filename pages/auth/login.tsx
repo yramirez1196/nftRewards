@@ -55,9 +55,10 @@ const Login = () => {
   const [band, setBand] = React.useState(false);
   React.useEffect(() => {
     console.log(band, isConnected, session, chain?.id);
-    if (!band && isConnected && !session && chain?.id === 11155111) {
+    /* if (!band && isConnected && !session && chain?.id === 11155111) { */
+		if (!band && isConnected && !session ) {
       setBand(true);
-			
+
       handleLogin();
     } else {
       /* disconnect(); */
