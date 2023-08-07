@@ -6,6 +6,7 @@ import {
   useDisconnect,
   useEnsName,
   useFeeData,
+  useWalletClient,
 } from "wagmi";
 const example = () => {
   const { address, connector, isConnected } = useAccount();
@@ -21,10 +22,17 @@ const example = () => {
   const { disconnect } = useDisconnect();
   const { data /*  isError, isLoading */ } = useFeeData();
 
-  /* eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
-    .eyJub25jZSI6IjE1MzJhYWU5LTk3ODEtNDYzOC1iZDkyLTBlMGNjMTBmMGI4OSIsIm9yZ0lkIjoiMTU0NTkxIiwidXNlcklkIjoiMTU0MjM1IiwidHlwZUlkIjoiZGY2NTBmOGQtZTVkZS00YjZhLWEzNTMtZDY1MDg5MmY0ZTRjIiwidHlwZSI6IlBST0pFQ1QiLCJpYXQiOjE2OTAzMDA3MTIsImV4cCI6NDg0NjA2MDcxMn0
-    .fDn5x2anKsuKxYUk4Xs7nv - RDCORd067nQyR1TrduuE; */
-  
+  if (typeof window !== "undefined") {
+    (window as any).web3?.eth?.getBalance(
+      "0xD661C81a0E1109e977946B0515Cf494d27fBfcCa",
+      (err: any, b: any) => {
+        if (err) console.log(err);
+        const balance = {} as any;
+				console.log((window as any).web3.utils);
+        balance.ether = (window as any).web3.utils.fromWei(b, "ether");
+      }
+    );
+  }
 
   return (
     <div>
