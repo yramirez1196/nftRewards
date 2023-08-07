@@ -6,7 +6,7 @@ import {
   useDisconnect,
   useEnsName,
   useFeeData,
-  useWalletClient,
+  
 } from "wagmi";
 const example = () => {
   const { address, connector, isConnected } = useAccount();
