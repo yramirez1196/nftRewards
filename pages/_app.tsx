@@ -14,6 +14,7 @@ import { CoinbaseWalletConnector } from "wagmi/connectors/coinbaseWallet";
 import { InjectedConnector } from "wagmi/connectors/injected";
 import { MetaMaskConnector } from "wagmi/connectors/metaMask";
 import { SessionProvider } from "next-auth/react";
+import { PermissionsProvider } from "@/context/permissions";
 /* import { WalletConnectConnector } from "wagmi/connectors/walletConnect"; */
 
 export default function App({ Component, pageProps }: any) {
@@ -63,9 +64,11 @@ export default function App({ Component, pageProps }: any) {
             <title>Notus NextJS by Creative Tim</title>
             <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
           </Head>
-          <Layout>
-            <Component {...pageProps} />
-          </Layout>
+          <PermissionsProvider>
+            <Layout>
+              <Component {...pageProps} />
+            </Layout>
+          </PermissionsProvider>
         </SessionProvider>
       </WagmiConfig>
     </React.Fragment>

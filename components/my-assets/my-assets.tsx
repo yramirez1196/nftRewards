@@ -4,6 +4,9 @@ import { EvmChain } from "@moralisweb3/evm-utils";
 
 import clsx from "clsx";
 import { useAccount } from "wagmi";
+import { useIsCollection } from "@/hooks";
+import { useModal } from "@/hooks/modal";
+
 /* import { ethers } from "ethers"; */
 
 export const MyAssetsComponent = () => {
@@ -11,7 +14,10 @@ export const MyAssetsComponent = () => {
   const [AssetsNfts, setAssetsNfts] = React.useState<any>();
   const [AssetsTokens, setAssetsTokens] = React.useState<any>();
   const [Option, setOption] = React.useState("NFTS");
+  const { symbol } = useIsCollection();
+  const [DataAsset, setDataAsset] = React.useState<any>();
 
+  const { Modal, hide, isShow, show } = useModal();
   const RunApp = async () => {
     if (!Moralis.Core.isStarted)
       await Moralis.start({
@@ -35,6 +41,8 @@ export const MyAssetsComponent = () => {
     });
 
     /* console.log(resultsTokens.raw); */
+    console.log(results);
+
     setAssetsTokens(resultsTokens.raw);
   };
 
@@ -55,6 +63,7 @@ export const MyAssetsComponent = () => {
     /* const WeiToEther = ethers.formatEther(balance);
 		return WeiToEther; */
   };
+
   return (
     <div className="relative">
       <div>
@@ -87,7 +96,7 @@ export const MyAssetsComponent = () => {
                     setOption(tab.href);
                   }}
                   className={clsx(
-										'focus:outline-none',
+                    "focus:outline-none",
                     tab.href === Option
                       ? "border-lightBlue-600 text-lightBlue-600"
                       : "border-transparent text-gray-500 hover:border-gray-400 hover:text-gray-400",
@@ -101,27 +110,38 @@ export const MyAssetsComponent = () => {
           </div>
         </div>
       </div>
-
       <div className="grid grid-cols-4  gap-x-4 gap-y-4 mt-6">
         {Option === "NFTS" &&
           AssetsNfts?.map((asset: any, index: number) => {
-            return (
-              <div key={index} className="px-4 py-3 bg-white rounded-lg">
-                <div>
-                  <img src={asset._data?.metadata?.image || ""} alt="" />
+            if (asset._data?.symbol === symbol) {
+              return (
+                <div key={index} className="px-4 py-3 bg-white rounded-lg">
+                  <div>
+                    <img src={asset._data?.metadata?.image || ""} alt="" />
+                  </div>
+                  <div className="pt-2">
+                    <p className="text-base font-semibold">
+                      {asset._data?.metadata?.name}{" "}
+                    </p>
+                  </div>
+                  <div className="mt-3">
+                    <button
+                      className="bg-green-600 p-1 rounded-lg text-white font-bold"
+                      onClick={() => {
+                        show();
+                        setDataAsset(asset._data);
+                      }}
+                    >
+                      Claim
+                    </button>
+                  </div>
                 </div>
-                <div className="pt-2">
-                  <p className="text-base font-semibold">
-                    {asset._data?.metadata?.name}{" "}
-                  </p>
-                </div>
-              </div>
-            );
+              );
+            }
           })}
 
         {Option === "TOKENS" &&
           AssetsTokens?.map((asset: any, index: number) => {
-            console.log(asset);
             return (
               <div
                 key={index}
@@ -147,6 +167,48 @@ export const MyAssetsComponent = () => {
             );
           })}
       </div>
+
+      <Modal isShow={isShow}>
+        <div>
+          <div className="text-center">
+            <p className="font-bold text-4xl ">Claim your reward</p>
+          </div>
+          <div className="mt-2">
+            <div className="px-4 py-3 bg-white rounded-lg">
+              <div className="flex justify-center">
+                <img
+                  src={DataAsset?.metadata?.image || ""}
+                  alt=""
+                  className="w-[250px] h-[250px]"
+                />
+              </div>
+              <div className="pt-2 text-center">
+                <p className="text-base font-semibold">
+                  {DataAsset?.metadata?.name}{" "}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div className="flex gap-x-4 justify-end mt-10">
+            <button
+              className="bg-red-600 p-2 rounded-lg text-white font-bold"
+              onClick={() => {
+                hide();
+              }}
+            >
+              Cancel
+            </button>
+            <button
+              className="bg-green-600 p-2 rounded-lg text-white font-bold"
+              onClick={() => {
+                hide();
+              }}
+            >
+              Claim
+            </button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

@@ -46,7 +46,7 @@ const Login = () => {
         callbackUrl,
       });
 
-      console.log("redirect", session);
+     
       router.push("/admin/dashboard");
     } catch (error) {
       window.alert(error);

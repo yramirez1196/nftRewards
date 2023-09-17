@@ -3,10 +3,30 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import { NotificationDropdown, UserDropdown } from "../Dropdowns";
+import { useIsCollection } from "@/hooks";
+import { PermissionsContext } from "@/context/permissions";
 
 export default function Sidebar() {
   const [collapseShow, setCollapseShow] = React.useState("hidden");
   const router = useRouter();
+  const { permissionUser, permissionAdmin } = useIsCollection();
+  /*  const [BandResultUser, setBandResultUser] = React.useState<any>(false);
+  const [BandResultAdmin, setBandResulAdmin] = React.useState<any>(false); */
+
+  const {
+    BandResultUser,
+    setBandResultUser,
+    BandResultAdmin,
+    setBandResulAdmin,
+  } = React.useContext(PermissionsContext);
+
+  React.useEffect(() => {
+    setBandResulAdmin(permissionAdmin());
+    permissionUser().then((resp) => {
+      setBandResultUser(resp);
+    });
+  }, []);
+
   return (
     <>
       <nav className="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:overflow-y-auto md:flex-row md:flex-nowrap md:overflow-hidden shadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-4 px-6">
@@ -110,28 +130,54 @@ export default function Sidebar() {
                   </button>
                 </Link>
               </li>
-              <li className="items-center">
-                <Link href="/admin/my-assets">
-                  <button
-                    className={
-                      "text-xs uppercase py-3 font-bold block " +
-                      (router.pathname.indexOf("/admin/my-assets") !== -1
-                        ? "text-lightBlue-500 hover:text-lightBlue-600"
-                        : "text-blueGray-700 hover:text-blueGray-500")
-                    }
-                  >
-                    <i
+              {BandResultUser === true && (
+                <li className="items-center">
+                  <Link href="/admin/my-assets">
+                    <button
                       className={
-                        "fas fa-tv mr-2 text-sm " +
+                        "text-xs uppercase py-3 font-bold block " +
                         (router.pathname.indexOf("/admin/my-assets") !== -1
-                          ? "opacity-75"
-                          : "text-blueGray-300")
+                          ? "text-lightBlue-500 hover:text-lightBlue-600"
+                          : "text-blueGray-700 hover:text-blueGray-500")
                       }
-                    ></i>{" "}
-                    My assets
-                  </button>
-                </Link>
-              </li>
+                    >
+                      <i
+                        className={
+                          "fas fa-tv mr-2 text-sm " +
+                          (router.pathname.indexOf("/admin/my-assets") !== -1
+                            ? "opacity-75"
+                            : "text-blueGray-300")
+                        }
+                      ></i>{" "}
+                      My assets
+                    </button>
+                  </Link>
+                </li>
+              )}
+              {BandResultAdmin === true && (
+                <li className="items-center">
+                  <Link href="/admin/rewards">
+                    <button
+                      className={
+                        "text-xs uppercase py-3 font-bold block " +
+                        (router.pathname.indexOf("/admin/rewards") !== -1
+                          ? "text-lightBlue-500 hover:text-lightBlue-600"
+                          : "text-blueGray-700 hover:text-blueGray-500")
+                      }
+                    >
+                      <i
+                        className={
+                          "fas fa-tv mr-2 text-sm " +
+                          (router.pathname.indexOf("/admin/my-assets") !== -1
+                            ? "opacity-75"
+                            : "text-blueGray-300")
+                        }
+                      ></i>{" "}
+                      Rewards
+                    </button>
+                  </Link>
+                </li>
+              )}
               <li className="items-center">
                 <Link href="/admin/settings">
                   <button
