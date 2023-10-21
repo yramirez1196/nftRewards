@@ -45,7 +45,7 @@ const Login = () => {
         signature,
         callbackUrl,
       });
-
+			
       router.push("/admin/dashboard");
     } catch (error) {
       window.alert(error);
