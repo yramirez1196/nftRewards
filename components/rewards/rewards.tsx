@@ -31,6 +31,11 @@ export const RewardsComponent = () => {
                 className="w-20 h-20 rounded-lg"
               />
             </div>
+						<div>
+							<button>
+								<p className="text-blue-400 text-xs font-bold">View</p>
+							</button>
+						</div>
           </div>
         </div>
       </div>

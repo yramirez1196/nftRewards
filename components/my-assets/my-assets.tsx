@@ -21,8 +21,7 @@ export const MyAssetsComponent = () => {
   const RunApp = async () => {
     if (!Moralis.Core.isStarted)
       await Moralis.start({
-        apiKey:
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJub25jZSI6IjE1MzJhYWU5LTk3ODEtNDYzOC1iZDkyLTBlMGNjMTBmMGI4OSIsIm9yZ0lkIjoiMTU0NTkxIiwidXNlcklkIjoiMTU0MjM1IiwidHlwZUlkIjoiZGY2NTBmOGQtZTVkZS00YjZhLWEzNTMtZDY1MDg5MmY0ZTRjIiwidHlwZSI6IlBST0pFQ1QiLCJpYXQiOjE2OTAzMDA3MTIsImV4cCI6NDg0NjA2MDcxMn0.fDn5x2anKsuKxYUk4Xs7nv-RDCORd067nQyR1TrduuE",
+        apiKey: process.env.NEXT_PUBLIC_API_KEY,
         // ...and any other configuration
       });
     const address = addressWallet || "";
@@ -40,9 +39,7 @@ export const MyAssetsComponent = () => {
       address: address,
     });
 
-    /* console.log(resultsTokens.raw); */
-    console.log(results);
-
+   
     setAssetsTokens(resultsTokens.raw);
   };
 
@@ -60,8 +57,7 @@ export const MyAssetsComponent = () => {
     const result = Number(balance) / 10 ** (Number(decimals) - 1 || 1);
 
     return result.toFixed(2);
-    /* const WeiToEther = ethers.formatEther(balance);
-		return WeiToEther; */
+   
   };
 
   return (
@@ -74,17 +70,7 @@ export const MyAssetsComponent = () => {
           <label htmlFor="tabs" className="sr-only">
             Select a tab
           </label>
-          {/* Use an "onChange" listener to redirect the user to the selected tab URL. */}
-          {/* <select
-            id="tabs"
-            name="tabs"
-            className="block w-full  py-2 pl-3 pr-10 text-base "
-            defaultValue={tabs.find((tab) => tab.href === Option)?.name || ""}
-          >
-            {tabs.map((tab) => (
-              <option key={tab.name}>{tab.name}</option>
-            ))}
-          </select> */}
+          
         </div>
         <div className="block">
           <div className="">

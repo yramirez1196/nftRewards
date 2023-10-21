@@ -23,7 +23,7 @@ const Login = () => {
     connector: new InjectedConnector(),
   });
   const { data: session } = useSession();
-  /* const { disconnect } = useDisconnect(); */
+  
   const handleLogin = async () => {
     try {
       const callbackUrl = "/";
@@ -54,8 +54,8 @@ const Login = () => {
   };
   const [band, setBand] = React.useState(false);
   React.useEffect(() => {
-    console.log(band, isConnected, session, chain?.id);
-    /* if (!band && isConnected && !session && chain?.id === 11155111) { */
+    
+    
 		if (!band && isConnected && !session ) {
       setBand(true);
 
@@ -64,11 +64,7 @@ const Login = () => {
       /* disconnect(); */
     }
   }, [isConnected]);
-  /* React.useEffect(() => {
-    console.log(chain);
-  }, [chain]); */
-
-  /* const { data: ensName } = useEnsName({ address }); */
+  
 
   return (
     <AuthLayout>
@@ -111,9 +107,7 @@ const Login = () => {
             <div className="flex flex-wrap mt-6 relative">
               <div className="w-1/2 text-right">
                 <Link href="/auth/register">
-                  {/*  <a href="#pablo" className="text-blueGray-200">
-                    <small>Create new account</small>
-                  </a> */}
+                 
                 </Link>
               </div>
             </div>
