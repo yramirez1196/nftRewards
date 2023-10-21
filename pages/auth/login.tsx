@@ -1,6 +1,6 @@
 import React from "react";
 import Link from "next/link";
-import { getCsrfToken, getSession, signIn, useSession } from "next-auth/react";
+import { getCsrfToken, getSession, signIn } from "next-auth/react";
 import { SiweMessage } from "siwe";
 import { /* useDisconnect, */ useNetwork, useSignMessage } from "wagmi";
 
