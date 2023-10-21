@@ -22,8 +22,8 @@ const Login = () => {
   const { connect, connectors, isLoading, pendingConnector } = useConnect({
     connector: new InjectedConnector(),
   });
-  const { data: session } = useSession();
-  
+
+
   const handleLogin = async () => {
     try {
       const callbackUrl = "/";
@@ -46,24 +46,12 @@ const Login = () => {
         callbackUrl,
       });
 
-     
       router.push("/admin/dashboard");
     } catch (error) {
       window.alert(error);
     }
   };
-  const [band, setBand] = React.useState(false);
-  React.useEffect(() => {
-    
-    
-		if (!band && isConnected && !session ) {
-      setBand(true);
-
-      handleLogin();
-    } else {
-      /* disconnect(); */
-    }
-  }, [isConnected]);
+ 
   
 
   return (
@@ -72,7 +60,7 @@ const Login = () => {
         <div className="flex content-center items-center justify-center h-full">
           <div className="w-full lg:w-4/12 px-4">
             <div className="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 border-0">
-              <div className="rounded-t mb-0 px-6 py-6">
+              <div className="rounded-t mb-0 px-6 py-6 flex flex-col items-center">
                 <div className="text-center mb-3">
                   <h6 className="text-blueGray-500 text-sm font-bold">
                     Sign in with
@@ -102,13 +90,23 @@ const Login = () => {
                     })}
                 </div>
                 {isConnected && <NetworkSwitcher></NetworkSwitcher>}
+                {isConnected && (
+                  <button
+                    type="button"
+                    className="bg-white active:bg-blueGray-50 mt-4 text-blueGray-700  px-4 py-2 rounded outline-none focus:outline-none mr-2 mb-1 uppercase shadow hover:shadow-md inline-flex items-center font-bold text-xs ease-linear transition-all duration-150 w-[200px]"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      handleLogin();
+                    }}
+                  >
+                    Login
+                  </button>
+                )}
               </div>
             </div>
             <div className="flex flex-wrap mt-6 relative">
               <div className="w-1/2 text-right">
-                <Link href="/auth/register">
-                 
-                </Link>
+                <Link href="/auth/register"></Link>
               </div>
             </div>
           </div>
